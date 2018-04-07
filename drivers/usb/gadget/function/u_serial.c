@@ -330,8 +330,18 @@ EXPORT_SYMBOL_GPL(gs_alloc_req);
  */
 void gs_free_req(struct usb_ep *ep, struct usb_request *req)
 {
+#ifdef CONFIG_LGE_USB_G_ANDROID
+	if (req != NULL) {
+		if (req->buf != NULL) {
+			kfree(req->buf);
+			req->buf = NULL;
+		}
+		usb_ep_free_request(ep, req);
+	}
+#else
 	kfree(req->buf);
 	usb_ep_free_request(ep, req);
+#endif
 }
 EXPORT_SYMBOL_GPL(gs_free_req);
 
@@ -792,7 +802,11 @@ static int gs_start_io(struct gs_port *port)
 	if (!port->port_usb)
 		return -EIO;
 	/* unblock any pending writes into our circular buffer */
+#ifndef CONFIG_LGE_USB_G_ANDROID
 	if (started) {
+#else
+	if (started && port->port.tty) {
+#endif
 		tty_wakeup(port->port.tty);
 	} else {
 		gs_free_requests(ep, head, &port->read_allocated);
@@ -1239,12 +1253,9 @@ gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
 	}
 
 	tty_port_init(&port->port);
-	tty_buffer_set_limit(&port->port, 8388608);
+	tty_buffer_set_limit(&port->port, 131072);
 	spin_lock_init(&port->port_lock);
 	init_waitqueue_head(&port->drain_wait);
-
-	pr_debug("%s open:ttyGS%d and set 8388608, avail:%d\n", __func__,
-		port_num, tty_buffer_space_avail(&port->port));
 
 	INIT_WORK(&port->push, gs_rx_push);
 

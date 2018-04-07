@@ -758,12 +758,10 @@ static void dwc3_cable_adc_work(struct work_struct *w)
 	if(lge_pm_get_cable_type() == CABLE_910K &&
 		(boot_mode == LGE_BOOT_MODE_QEM_56K ||
 		boot_mode == LGE_BOOT_MODE_QEM_130K) &&
-		(lge_smem_cable_type() != 11 || !firstboot_check)
-#ifdef CONFIG_LGE_USB_G_LAF
-		&& !lge_get_laf_mode()
-#endif
+		(lge_smem_cable_type() != 11 || !firstboot_check) &&
+		!lge_get_laf_mode()
 #if defined(CONFIG_SLIMPORT_COMMON) || defined(CONFIG_LGE_DP_ANX7688)
-		&& !slimport_is_connected()
+		&&!slimport_is_connected()
 #endif
 		)
 	{
@@ -2507,9 +2505,7 @@ static int dwc3_msm_prepare_suspend(struct dwc3_msm *mdwc)
 {
 	unsigned long timeout;
 	u32 reg = 0;
-#ifdef CONFIG_LGE_USB_MAXIM_EVP
 	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
-#endif
 
 	if ((mdwc->in_host_mode || (mdwc->vbus_active
 			&& mdwc->otg_state == OTG_STATE_B_SUSPEND))
