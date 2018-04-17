@@ -799,9 +799,9 @@ retry:
 		spin_unlock_irq(&epfile->ffs->eps_lock);
 #else
 		if (gadget) {
-			extra_buf_alloc = gadget->extra_buf_alloc;
+		extra_buf_alloc = gadget->extra_buf_alloc;
 		} else {
-			spin_unlock_irq(&epfile->ffs->eps_lock);
+		spin_unlock_irq(&epfile->ffs->eps_lock);
 			ret = -ENODEV;
 			goto error;
 		}
