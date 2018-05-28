@@ -2733,6 +2733,7 @@ CONFIG_MSM_SEC_CCI_TA_NAME="seccamdemo64"
 # CONFIG_LG_TCS is not set
 # CONFIG_LGE_EEPROM is not set
 CONFIG_LG_OIS=y
+CONFIG_LG_OIS_FIRMWARE_PATH="/vendor/firmware"
 # CONFIG_LG_PROXY is not set
 # CONFIG_LC898123F40 is not set
 # CONFIG_MSM_AIS is not set
