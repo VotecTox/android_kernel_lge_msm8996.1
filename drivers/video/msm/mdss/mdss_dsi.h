@@ -404,7 +404,6 @@ struct dsi_panel_timing {
 	struct dsi_panel_cmds ie_off_cmds;
 #endif
 #if defined(CONFIG_LGE_DISPLAY_LUCYE_COMMON)
-	struct dsi_panel_cmds display_on_cmds;
 	struct dsi_panel_cmds display_on_and_aod_comds;
 	struct dsi_panel_cmds reg_55h_cmds;
 	struct dsi_panel_cmds reg_f0h_cmds;
@@ -582,7 +581,6 @@ struct mdss_dsi_ctrl_pdata {
 	struct dsi_panel_cmds vcom_cmds;
 #endif
 #if defined(CONFIG_LGE_DISPLAY_LUCYE_COMMON)
-	struct dsi_panel_cmds display_on_cmds;
 	struct dsi_panel_cmds display_on_and_aod_comds;
 	struct dsi_panel_cmds reg_55h_cmds;
 	struct dsi_panel_cmds reg_f0h_cmds;
