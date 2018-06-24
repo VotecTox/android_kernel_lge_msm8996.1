@@ -27,6 +27,7 @@
 #include <linux/power/lge_battery_id.h>
 #include <linux/lge_display_debug.h>
 #include "lge_mdss_display.h"
+#include "../../../backlight/lm3697_bl.c"
 
 extern int get_factory_cable(void);
 #define LGEUSB_FACTORY_56K 1
